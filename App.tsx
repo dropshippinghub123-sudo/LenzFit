@@ -1,45 +1,45 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from './app/screens/HomeScreen';
+import WorkoutsScreen from './app/screens/WorkoutsScreen';
+import LenzAnalysisScreen from './app/screens/LenzAnalysisScreen';
+import CommunityScreen from './app/screens/CommunityScreen';
+import ProfileScreen from './app/screens/ProfileScreen';
+import ProgressScreen from './app/screens/ProgressScreen';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const Tab = createBottomTabNavigator();
 
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+const theme = {
+  colors: {
+    primary: '#4F8EF7',
+    background: '#181A20',
+    card: '#23272F',
+    text: '#fff',
+    border: '#23272F',
+    notification: '#FF6F61',
   },
-});
+};
 
-export default App;
+export default function App() {
+  return (
+    <NavigationContainer theme={theme}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: '#888',
+          tabBarStyle: { backgroundColor: theme.colors.card },
+        }}
+      >
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Workouts" component={WorkoutsScreen} />
+        <Tab.Screen name="Lenz Analysis" component={LenzAnalysisScreen} />
+        <Tab.Screen name="Community" component={CommunityScreen} />
+        <Tab.Screen name="Progress" component={ProgressScreen} />
+        <Tab.Screen name="Profile" component={ProfileScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
